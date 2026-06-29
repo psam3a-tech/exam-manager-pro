@@ -1,16 +1,18 @@
 import { useAuth } from "@/hooks/use-auth";
 import { Link, useLocation } from "wouter";
-import { 
-  Building2, 
-  BookOpen, 
-  Users, 
-  LayoutDashboard, 
-  FileText, 
-  GraduationCap, 
-  Database,
-  LogOut,
+import {
   Activity,
-  ClipboardList
+  BookOpen,
+  ClipboardList,
+  FileText,
+  GraduationCap,
+  LayoutDashboard,
+  LogOut,
+  Megaphone,
+  Monitor,
+  Shield,
+  Users,
+  Video,
 } from "lucide-react";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -25,12 +27,25 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     ],
     admin: [
       { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+      { name: "Users", href: "/admin/users", icon: Users },
+      { name: "Courses", href: "/admin/courses", icon: BookOpen },
+      { name: "Announcements", href: "/admin/announcements", icon: Megaphone },
     ],
     lecturer: [
       { name: "Dashboard", href: "/lecturer", icon: LayoutDashboard },
+      { name: "Exams & Questions", href: "/lecturer/exams", icon: FileText },
+      { name: "Live Classes", href: "/lecturer/live", icon: Video },
+      { name: "Materials", href: "/lecturer/materials", icon: BookOpen },
+      { name: "Assignments", href: "/lecturer/assignments", icon: ClipboardList },
+      { name: "Proctoring", href: "/lecturer/proctoring", icon: Shield },
     ],
     student: [
       { name: "Dashboard", href: "/student", icon: LayoutDashboard },
+      { name: "My Exams", href: "/student/exams", icon: FileText },
+      { name: "Live Classes", href: "/student/live", icon: Video },
+      { name: "Materials", href: "/student/materials", icon: BookOpen },
+      { name: "Assignments", href: "/student/assignments", icon: ClipboardList },
+      { name: "Announcements", href: "/student/announcements", icon: Megaphone },
     ],
   };
 
@@ -38,7 +53,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-[100dvh] flex bg-background">
-      {/* Sidebar */}
       <aside className="w-64 bg-sidebar text-sidebar-foreground border-r border-sidebar-border hidden md:flex flex-col">
         <div className="p-6 border-b border-sidebar-border">
           <div className="flex items-center gap-2 text-sidebar-primary font-bold text-xl tracking-tight">
@@ -46,24 +60,27 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             <span>OEMS</span>
           </div>
           <p className="text-xs text-sidebar-foreground/60 mt-1 uppercase tracking-wider font-semibold">
-            {user.role.replace("_", " ")} Portal
+            {user.role.replace(/_/g, " ")} Portal
           </p>
         </div>
 
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          {navItems.map((item) => (
-            <Link 
-              key={item.href} 
-              href={item.href}
-              className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors text-sm font-medium
-                ${location.startsWith(item.href) 
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground" 
-                  : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"}`}
-            >
-              <item.icon className="h-4 w-4" />
-              {item.name}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const active = location === item.href || (item.href !== "/super-admin" && item.href !== "/admin" && item.href !== "/lecturer" && item.href !== "/student" && location.startsWith(item.href));
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center gap-3 px-3 py-2 rounded-md transition-colors text-sm font-medium
+                  ${active
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                    : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"}`}
+              >
+                <item.icon className="h-4 w-4 shrink-0" />
+                {item.name}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="p-4 border-t border-sidebar-border">
@@ -77,10 +94,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <button
-            onClick={() => {
-              logout();
-              setLocation("/login");
-            }}
+            onClick={() => { logout(); setLocation("/login"); }}
             className="flex w-full items-center gap-3 px-3 py-2 rounded-md transition-colors text-sm font-medium text-sidebar-foreground/80 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
           >
             <LogOut className="h-4 w-4" />
@@ -89,19 +103,14 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Mobile Header */}
         <header className="h-14 border-b bg-card flex items-center justify-between px-4 md:hidden">
           <div className="flex items-center gap-2 text-primary font-bold">
             <GraduationCap className="h-5 w-5" />
             <span>OEMS</span>
           </div>
           <button
-            onClick={() => {
-              logout();
-              setLocation("/login");
-            }}
+            onClick={() => { logout(); setLocation("/login"); }}
             className="p-2 text-muted-foreground hover:text-foreground"
           >
             <LogOut className="h-5 w-5" />

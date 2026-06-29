@@ -6,3 +6,8 @@ export * from "./questions";
 export * from "./exams";
 export * from "./enrollments";
 export * from "./attempts";
+export * from "./proctoring";
+export * from "./live_sessions";
+export * from "./materials";
+export * from "./assignments";
+export * from "./announcements";

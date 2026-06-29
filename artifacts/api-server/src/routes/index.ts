@@ -11,6 +11,11 @@ import enrollmentsRouter from "./enrollments";
 import attemptsRouter from "./attempts";
 import resultsRouter from "./results";
 import analyticsRouter from "./analytics";
+import proctoringRouter from "./proctoring";
+import liveSessionsRouter from "./live-sessions";
+import materialsRouter from "./materials";
+import assignmentsRouter from "./assignments";
+import announcementsRouter from "./announcements";
 
 const router: IRouter = Router();
 
@@ -26,5 +31,10 @@ router.use(enrollmentsRouter);
 router.use(attemptsRouter);
 router.use(resultsRouter);
 router.use(analyticsRouter);
+router.use(proctoringRouter);
+router.use(liveSessionsRouter);
+router.use(materialsRouter);
+router.use(assignmentsRouter);
+router.use(announcementsRouter);
 
 export default router;
