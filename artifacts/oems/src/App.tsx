@@ -7,6 +7,8 @@ import { AuthProvider, useAuth } from "@/hooks/use-auth";
 import NotFound from "@/pages/not-found";
 import Login from "@/pages/login";
 import Signup from "@/pages/signup";
+import ForgotPassword from "@/pages/forgot-password";
+import ResetPassword from "@/pages/reset-password";
 import DashboardRouter from "@/pages/dashboard";
 
 import SuperAdminDashboard from "@/pages/super-admin";
@@ -77,6 +79,8 @@ function Router() {
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
+      <Route path="/forgot-password" component={ForgotPassword} />
+      <Route path="/reset-password" component={ResetPassword} />
       <Route path="/" component={DashboardRouter} />
       <Route path="/dashboard" component={DashboardRouter} />
       <Route path="/unauthorized" component={Unauthorized} />

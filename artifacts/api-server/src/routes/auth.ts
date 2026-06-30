@@ -96,6 +96,63 @@ router.post("/auth/register", async (req: Request, res: Response): Promise<void>
   });
 });
 
+router.post("/auth/forgot-password", async (req: Request, res: Response): Promise<void> => {
+  const { email } = req.body;
+  if (!email) {
+    res.status(400).json({ error: "Email is required" });
+    return;
+  }
+
+  const [user] = await db.select({ id: usersTable.id, email: usersTable.email })
+    .from(usersTable).where(eq(usersTable.email, email.toLowerCase().trim())).limit(1);
+
+  if (!user) {
+    res.status(404).json({ error: "No account found with that email address" });
+    return;
+  }
+
+  const { randomInt } = await import("crypto");
+  const code = String(randomInt(100000, 999999));
+  const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+
+  await db.update(usersTable)
+    .set({ resetToken: code, resetTokenExpiresAt: expiresAt })
+    .where(eq(usersTable.id, user.id));
+
+  res.json({ resetCode: code });
+});
+
+router.post("/auth/reset-password", async (req: Request, res: Response): Promise<void> => {
+  const { code, password } = req.body;
+  if (!code || !password) {
+    res.status(400).json({ error: "Code and new password are required" });
+    return;
+  }
+  if (password.length < 6) {
+    res.status(400).json({ error: "Password must be at least 6 characters" });
+    return;
+  }
+
+  const now = new Date();
+  const [user] = await db.select({ id: usersTable.id, resetTokenExpiresAt: usersTable.resetTokenExpiresAt })
+    .from(usersTable).where(eq(usersTable.resetToken, code)).limit(1);
+
+  if (!user) {
+    res.status(400).json({ error: "Invalid reset code" });
+    return;
+  }
+  if (!user.resetTokenExpiresAt || user.resetTokenExpiresAt < now) {
+    res.status(400).json({ error: "Reset code has expired. Please request a new one." });
+    return;
+  }
+
+  await db.update(usersTable)
+    .set({ passwordHash: hashPassword(password), resetToken: null, resetTokenExpiresAt: null })
+    .where(eq(usersTable.id, user.id));
+
+  res.json({ success: true });
+});
+
 router.post("/auth/logout", (_req: Request, res: Response): void => {
   res.json({ success: true });
 });
