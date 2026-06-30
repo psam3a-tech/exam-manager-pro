@@ -17,6 +17,7 @@ import AdminDashboard from "@/pages/admin";
 import AdminUsersPage from "@/pages/admin/users";
 import AdminCoursesPage from "@/pages/admin/courses";
 import AdminAnnouncementsPage from "@/pages/admin/announcements";
+import AdminProfilePage from "@/pages/admin/profile";
 
 import LecturerDashboard from "@/pages/lecturer";
 import LecturerExamsPage from "@/pages/lecturer/exams";
@@ -95,6 +96,7 @@ function Router() {
       <Route path="/admin/users">{() => <ProtectedRoute component={AdminUsersPage} allowedRoles={["admin", "super_admin"]} />}</Route>
       <Route path="/admin/courses">{() => <ProtectedRoute component={AdminCoursesPage} allowedRoles={["admin", "super_admin"]} />}</Route>
       <Route path="/admin/announcements">{() => <ProtectedRoute component={AdminAnnouncementsPage} allowedRoles={["admin", "super_admin"]} />}</Route>
+      <Route path="/admin/profile">{() => <ProtectedRoute component={AdminProfilePage} allowedRoles={["admin", "super_admin"]} />}</Route>
 
       {/* Lecturer */}
       <Route path="/lecturer">{() => <ProtectedRoute component={LecturerDashboard} allowedRoles={["lecturer"]} />}</Route>
