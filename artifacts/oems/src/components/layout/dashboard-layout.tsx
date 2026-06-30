@@ -11,6 +11,7 @@ import {
   Megaphone,
   Monitor,
   Shield,
+  Table2,
   UserCircle,
   Users,
   Video,
@@ -40,6 +41,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       { name: "Materials", href: "/lecturer/materials", icon: BookOpen },
       { name: "Assignments", href: "/lecturer/assignments", icon: ClipboardList },
       { name: "Proctoring", href: "/lecturer/proctoring", icon: Shield },
+      { name: "Grade Book", href: "/lecturer/gradebook", icon: Table2 },
       { name: "My Profile", href: "/lecturer/profile", icon: UserCircle },
     ],
     student: [
