@@ -142,13 +142,13 @@ export default function LecturerProfile() {
                   )}
                 />
 
-                <FormItem>
-                  <FormLabel>Email Address</FormLabel>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium leading-none">Email Address</label>
                   <Input value={user.email} disabled className="bg-muted/50 cursor-not-allowed" />
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-muted-foreground">
                     Email cannot be changed. Contact an admin if needed.
                   </p>
-                </FormItem>
+                </div>
 
                 <Button type="submit" disabled={infoLoading} className="w-full sm:w-auto">
                   {infoLoading ? "Saving..." : "Save changes"}

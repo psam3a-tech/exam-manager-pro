@@ -167,12 +167,10 @@ export default function StudentProfile() {
                   )}
                 />
 
-                <div className="pt-1">
-                  <FormItem>
-                    <FormLabel>Email Address</FormLabel>
-                    <Input value={user.email} disabled className="bg-muted/50 cursor-not-allowed" />
-                    <p className="text-xs text-muted-foreground mt-1">Email cannot be changed. Contact an admin if needed.</p>
-                  </FormItem>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium leading-none">Email Address</label>
+                  <Input value={user.email} disabled className="bg-muted/50 cursor-not-allowed" />
+                  <p className="text-xs text-muted-foreground">Email cannot be changed. Contact an admin if needed.</p>
                 </div>
 
                 <Button type="submit" disabled={infoLoading} className="w-full sm:w-auto">
