@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect } from "react";
+import { AlertTriangle } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -25,7 +26,7 @@ const loginSchema = z.object({
 
 export default function Login() {
   const [_, setLocation] = useLocation();
-  const { login: setAuthToken, isAuthenticated } = useAuth();
+  const { login: setAuthToken, isAuthenticated, sessionExpired } = useAuth();
   const { toast } = useToast();
   const loginMutation = useLogin();
 
@@ -49,7 +50,6 @@ export default function Login() {
       {
         onSuccess: (data) => {
           setAuthToken(data.token);
-          // Router will redirect via the useEffect
         },
         onError: (error: any) => {
           toast({
@@ -65,6 +65,14 @@ export default function Login() {
   return (
     <AuthLayout>
       <div className="space-y-6">
+        {/* Session-expired banner */}
+        {sessionExpired && (
+          <div className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+            <span>Your session has expired. Please sign in again to continue.</span>
+          </div>
+        )}
+
         <div>
           <h1 className="text-2xl font-bold text-foreground">Sign in to your account</h1>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -87,7 +95,7 @@ export default function Login() {
                 </FormItem>
               )}
             />
-            
+
             <FormField
               control={form.control}
               name="password"
@@ -111,9 +119,9 @@ export default function Login() {
               )}
             />
 
-            <Button 
-              type="submit" 
-              className="w-full" 
+            <Button
+              type="submit"
+              className="w-full"
               disabled={loginMutation.isPending}
             >
               {loginMutation.isPending ? "Signing in..." : "Sign in"}

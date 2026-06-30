@@ -160,7 +160,7 @@ router.get("/gradebook", requireAuth, async (req: Request, res: Response): Promi
 
     return {
       courseId: course.id,
-      courseCode: (course as any).code ?? null,
+      courseCode: course.code ?? null,
       courseName: course.name,
       exams: courseExams.map((e) => ({ examId: e.id, title: e.title, passingScore: e.passingScore })),
       assignments: courseAssignments.map((a) => ({

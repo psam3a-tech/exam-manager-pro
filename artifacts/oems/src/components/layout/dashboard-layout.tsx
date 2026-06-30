@@ -50,6 +50,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       { name: "Live Classes", href: "/student/live", icon: Video },
       { name: "Materials", href: "/student/materials", icon: BookOpen },
       { name: "Assignments", href: "/student/assignments", icon: ClipboardList },
+      { name: "My Grades", href: "/student/grades", icon: Table2 },
       { name: "Announcements", href: "/student/announcements", icon: Megaphone },
       { name: "My Profile", href: "/student/profile", icon: UserCircle },
     ],

@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/hooks/use-auth";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 import NotFound from "@/pages/not-found";
 import Login from "@/pages/login";
@@ -34,6 +35,7 @@ import StudentLivePage from "@/pages/student/live";
 import StudentMaterialsPage from "@/pages/student/materials";
 import StudentAssignmentsPage from "@/pages/student/assignments";
 import StudentAnnouncementsPage from "@/pages/student/announcements";
+import StudentGradesPage from "@/pages/student/grades";
 import StudentProfilePage from "@/pages/student/profile";
 
 const queryClient = new QueryClient({
@@ -116,6 +118,7 @@ function Router() {
       <Route path="/student/materials">{() => <ProtectedRoute component={StudentMaterialsPage} allowedRoles={["student"]} />}</Route>
       <Route path="/student/assignments">{() => <ProtectedRoute component={StudentAssignmentsPage} allowedRoles={["student"]} />}</Route>
       <Route path="/student/announcements">{() => <ProtectedRoute component={StudentAnnouncementsPage} allowedRoles={["student"]} />}</Route>
+      <Route path="/student/grades">{() => <ProtectedRoute component={StudentGradesPage} allowedRoles={["student"]} />}</Route>
       <Route path="/student/profile">{() => <ProtectedRoute component={StudentProfilePage} allowedRoles={["student"]} />}</Route>
 
       <Route component={NotFound} />
@@ -125,16 +128,18 @@ function Router() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <TooltipProvider>
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-            <Router />
-          </WouterRouter>
-          <Toaster />
-        </TooltipProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <TooltipProvider>
+            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+              <Router />
+            </WouterRouter>
+            <Toaster />
+          </TooltipProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 

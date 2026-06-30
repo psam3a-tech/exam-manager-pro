@@ -17,6 +17,7 @@ import materialsRouter from "./materials";
 import assignmentsRouter from "./assignments";
 import announcementsRouter from "./announcements";
 import gradebookRouter from "./gradebook";
+import myGradesRouter from "./my-grades";
 
 const router: IRouter = Router();
 
@@ -38,5 +39,6 @@ router.use(materialsRouter);
 router.use(assignmentsRouter);
 router.use(announcementsRouter);
 router.use(gradebookRouter);
+router.use(myGradesRouter);
 
 export default router;
