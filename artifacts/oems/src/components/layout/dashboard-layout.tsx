@@ -11,6 +11,7 @@ import {
   Megaphone,
   Monitor,
   Shield,
+  UserCircle,
   Users,
   Video,
 } from "lucide-react";
@@ -46,6 +47,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       { name: "Materials", href: "/student/materials", icon: BookOpen },
       { name: "Assignments", href: "/student/assignments", icon: ClipboardList },
       { name: "Announcements", href: "/student/announcements", icon: Megaphone },
+      { name: "My Profile", href: "/student/profile", icon: UserCircle },
     ],
   };
 

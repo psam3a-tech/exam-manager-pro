@@ -183,6 +183,52 @@ router.get("/auth/me", requireAuth, async (req: Request, res: Response): Promise
   });
 });
 
+router.put("/auth/me", requireAuth, async (req: Request, res: Response): Promise<void> => {
+  const authUser = (req as Request & { user: AuthPayload }).user;
+  const { name, studentId, currentPassword, newPassword } = req.body;
+
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.id, authUser.userId)).limit(1);
+  if (!user) { res.status(404).json({ error: "User not found" }); return; }
+
+  const updates: Partial<typeof usersTable.$inferInsert> = {};
+
+  if (name !== undefined) {
+    if (!name.trim()) { res.status(400).json({ error: "Name cannot be empty" }); return; }
+    updates.name = name.trim();
+  }
+  if (studentId !== undefined) updates.studentId = studentId?.trim() || null;
+
+  if (newPassword !== undefined) {
+    if (!currentPassword) { res.status(400).json({ error: "Current password is required to set a new one" }); return; }
+    if (user.passwordHash !== hashPassword(currentPassword)) { res.status(400).json({ error: "Current password is incorrect" }); return; }
+    if (newPassword.length < 6) { res.status(400).json({ error: "New password must be at least 6 characters" }); return; }
+    updates.passwordHash = hashPassword(newPassword);
+  }
+
+  if (Object.keys(updates).length === 0) { res.status(400).json({ error: "No changes provided" }); return; }
+
+  const [updated] = await db.update(usersTable).set(updates).where(eq(usersTable.id, user.id)).returning();
+
+  let departmentName: string | null = null;
+  if (updated.departmentId) {
+    const { departmentsTable } = await import("@workspace/db");
+    const [dept] = await db.select({ name: departmentsTable.name }).from(departmentsTable).where(eq(departmentsTable.id, updated.departmentId)).limit(1);
+    departmentName = dept?.name ?? null;
+  }
+
+  res.json({
+    id: updated.id,
+    name: updated.name,
+    email: updated.email,
+    role: updated.role,
+    departmentId: updated.departmentId,
+    departmentName,
+    studentId: updated.studentId,
+    isActive: updated.isActive,
+    createdAt: updated.createdAt.toISOString(),
+  });
+});
+
 export function hashPasswordExport(password: string): string {
   return hashPassword(password);
 }

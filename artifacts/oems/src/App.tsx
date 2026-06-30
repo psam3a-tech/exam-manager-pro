@@ -31,6 +31,7 @@ import StudentLivePage from "@/pages/student/live";
 import StudentMaterialsPage from "@/pages/student/materials";
 import StudentAssignmentsPage from "@/pages/student/assignments";
 import StudentAnnouncementsPage from "@/pages/student/announcements";
+import StudentProfilePage from "@/pages/student/profile";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, staleTime: 30_000 } },
@@ -109,6 +110,7 @@ function Router() {
       <Route path="/student/materials">{() => <ProtectedRoute component={StudentMaterialsPage} allowedRoles={["student"]} />}</Route>
       <Route path="/student/assignments">{() => <ProtectedRoute component={StudentAssignmentsPage} allowedRoles={["student"]} />}</Route>
       <Route path="/student/announcements">{() => <ProtectedRoute component={StudentAnnouncementsPage} allowedRoles={["student"]} />}</Route>
+      <Route path="/student/profile">{() => <ProtectedRoute component={StudentProfilePage} allowedRoles={["student"]} />}</Route>
 
       <Route component={NotFound} />
     </Switch>
