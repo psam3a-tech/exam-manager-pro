@@ -52,6 +52,50 @@ router.post("/auth/login", async (req: Request, res: Response): Promise<void> =>
   });
 });
 
+router.post("/auth/register", async (req: Request, res: Response): Promise<void> => {
+  const { name, email, password, studentId } = req.body;
+
+  if (!name || !email || !password) {
+    res.status(400).json({ error: "Name, email and password are required" });
+    return;
+  }
+  if (password.length < 6) {
+    res.status(400).json({ error: "Password must be at least 6 characters" });
+    return;
+  }
+
+  const [existing] = await db.select({ id: usersTable.id }).from(usersTable).where(eq(usersTable.email, email)).limit(1);
+  if (existing) {
+    res.status(409).json({ error: "An account with that email already exists" });
+    return;
+  }
+
+  const [newUser] = await db.insert(usersTable).values({
+    name: name.trim(),
+    email: email.toLowerCase().trim(),
+    passwordHash: hashPassword(password),
+    role: "student",
+    studentId: studentId?.trim() || null,
+    isActive: true,
+  }).returning();
+
+  const token = signToken({ userId: newUser.id, role: newUser.role, email: newUser.email });
+  res.status(201).json({
+    user: {
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      role: newUser.role,
+      departmentId: newUser.departmentId,
+      departmentName: null,
+      studentId: newUser.studentId,
+      isActive: newUser.isActive,
+      createdAt: newUser.createdAt.toISOString(),
+    },
+    token,
+  });
+});
+
 router.post("/auth/logout", (_req: Request, res: Response): void => {
   res.json({ success: true });
 });
