@@ -24,6 +24,7 @@ import LecturerLivePage from "@/pages/lecturer/live";
 import LecturerMaterialsPage from "@/pages/lecturer/materials";
 import LecturerAssignmentsPage from "@/pages/lecturer/assignments";
 import LecturerProctoringPage from "@/pages/lecturer/proctoring";
+import LecturerProfilePage from "@/pages/lecturer/profile";
 
 import StudentDashboard from "@/pages/student";
 import StudentExamsPage from "@/pages/student/exams";
@@ -102,6 +103,7 @@ function Router() {
       <Route path="/lecturer/materials">{() => <ProtectedRoute component={LecturerMaterialsPage} allowedRoles={["lecturer"]} />}</Route>
       <Route path="/lecturer/assignments">{() => <ProtectedRoute component={LecturerAssignmentsPage} allowedRoles={["lecturer"]} />}</Route>
       <Route path="/lecturer/proctoring">{() => <ProtectedRoute component={LecturerProctoringPage} allowedRoles={["lecturer"]} />}</Route>
+      <Route path="/lecturer/profile">{() => <ProtectedRoute component={LecturerProfilePage} allowedRoles={["lecturer"]} />}</Route>
 
       {/* Student */}
       <Route path="/student">{() => <ProtectedRoute component={StudentDashboard} allowedRoles={["student"]} />}</Route>

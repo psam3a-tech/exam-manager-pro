@@ -39,6 +39,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       { name: "Materials", href: "/lecturer/materials", icon: BookOpen },
       { name: "Assignments", href: "/lecturer/assignments", icon: ClipboardList },
       { name: "Proctoring", href: "/lecturer/proctoring", icon: Shield },
+      { name: "My Profile", href: "/lecturer/profile", icon: UserCircle },
     ],
     student: [
       { name: "Dashboard", href: "/student", icon: LayoutDashboard },
