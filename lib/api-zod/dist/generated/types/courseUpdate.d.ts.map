@@ -1,0 +1,1 @@
+{"version":3,"file":"courseUpdate.d.ts","sourceRoot":"","sources":["../../../src/generated/types/courseUpdate.ts"],"names":[],"mappings":"AAAA;;;;;;GAMG;AAEH,MAAM,WAAW,YAAY;IAC3B,IAAI,CAAC,EAAE,MAAM,CAAC;IACd,IAAI,CAAC,EAAE,MAAM,CAAC;IACd,WAAW,CAAC,EAAE,MAAM,CAAC;IACrB,gBAAgB;IAChB,YAAY,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;IAC7B,gBAAgB;IAChB,UAAU,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;CAC5B"}
