@@ -11,3 +11,8 @@ export * from "./live_sessions";
 export * from "./materials";
 export * from "./assignments";
 export * from "./announcements";
+export * from "./audit-logs";
+export * from "./user-sessions";
+export * from "./system-settings";
+export * from "./question-bank";
+export * from "./performance-snapshots";
