@@ -47,3 +47,30 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+# Replit specific files
+.agents/
+.cache/
+.local/
+.replit
+.replitignore
+replit.md
+artifacts/
+node_modules/
+
+# Documentation build
+docs/_build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+out/
+
+# OS files
+.DS_Store
+Thumbs.db
+*.log
