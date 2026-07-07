@@ -37,7 +37,6 @@ A production-ready, secure online examination platform with advanced question ba
 | Backend | Node.js + Express |
 | Database | PostgreSQL |
 | Authentication | JWT with RBAC |
-| Styling | Tailwind CSS |
 | Package Manager | pnpm |
 
 ## 📦 Quick Start
@@ -52,7 +51,6 @@ pnpm install
 
 # Set up environment variables
 cp .env.example .env
-# Edit .env with your values
 
 # Run database migrations
 pnpm --filter @workspace/db run push
