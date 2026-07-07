@@ -1,3 +1,0 @@
-- [OEMS auth pattern](oems-auth.md) — JWT stored in localStorage key `oems_token`; customFetch auto-attaches it; must export `customFetch` from lib/api-client-react/src/index.ts
-- [OEMS frontend architecture](oems-frontend.md) — role-based sub-pages at /role/section; all use direct api.get/post via lib/api.ts wrapper around customFetch
-- [OEMS DB schema](oems-schema.md) — 13 tables total including proctoring_violations, live_sessions, course_materials, assignments, announcements
